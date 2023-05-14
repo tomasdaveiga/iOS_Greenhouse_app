@@ -21,10 +21,10 @@ struct GreenhouseView: View {
                         .frame(maxWidth: .infinity, alignment: .trailing)
                         .padding()
                 
-                        Text("Greenhouse")
-                            .bold().font(.system(size: 50))
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding()
+                    Text("Greenhouse")
+                        .bold().font(.system(size: 50))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding()
                 }
                 
                 Spacer(minLength: 20)
@@ -39,11 +39,11 @@ struct GreenhouseView: View {
                     else{
                         VariableRow(logo: "thermometer.no_weather", name: "Temperature", value: (greenhouse.feeds[0].temperature.roundDouble()+"°"))
                     }
-                    Spacer()
+                    Spacer().frame(height: 10)
                         VariableRow(logo: "humidity", name: "Humidity", value: (greenhouse.feeds[0].humidity.roundInt()))
-                    Spacer()
+                    Spacer().frame(height: 10)
                         VariableRow(logo: "light.max", name: "Light", value: (greenhouse.feeds[0].light.roundInt()))
-                    Spacer()
+                    Spacer().frame(height: 10)
                         VariableRow(logo: "window.ceiling", name: "Window", value: (greenhouse.feeds[0].windowAngle.roundInt()))
                 }
             }

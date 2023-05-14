@@ -12,23 +12,32 @@ struct ContentView: View {
     @State var greenhouse: ResponseBody?
     
     var body: some View {
-        VStack{
-            if let greenhouse = greenhouse {
-                GreenhouseView(greenhouse: greenhouse)
-            } else {
-                LoadingView()
-                    .task {
-                        do{
-                            greenhouse = try await greenhouseManager.getCurrentGreenhouseStats()
-                        } catch{
-                            print("Error getting greenhouse: \(error)")
+        ScrollView{
+            LazyVStack{
+                if let greenhouse = greenhouse {
+                    GreenhouseView(greenhouse: greenhouse)
+                } else {
+                    LoadingView()
+                        .task {
+                            do{
+                                greenhouse = try await greenhouseManager.getCurrentGreenhouseStats()
+                            } catch{
+                                print("Error getting greenhouse: \(error)")
+                            }
                         }
-                    }
+                }
             }
         }
+        .edgesIgnoringSafeArea(.top)
         .background(Color(hue: 0.6, saturation: 0.887, brightness: 0.557))
         .preferredColorScheme(.dark)
-        
+        .refreshable{
+            do{
+                greenhouse = try await greenhouseManager.getCurrentGreenhouseStats()
+            } catch{
+                print("Error getting greenhouse: \(error)")
+            }
+        }
     }
 }
 
